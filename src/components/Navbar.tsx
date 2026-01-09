@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 const navItems = [
-  { label: 'Get Started', href: '#choose-path' },
   { label: 'Book a Talent', href: '#training' },
-  { label: 'XPrint', href: '/xprint' },
+  { label: 'Community', href: '#initiatives' },
 ];
 
 export function Navbar() {
@@ -25,39 +23,39 @@ export function Navbar() {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-background/80 backdrop-blur-xl border-b border-border' 
+          ? 'bg-background/60 backdrop-blur-2xl border-b border-border/50' 
           : 'bg-transparent'
       }`}
     >
       <div className="container-custom">
-        <nav className="flex items-center justify-between h-16 md:h-20">
+        <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
-            <span className="text-2xl md:text-3xl font-display font-bold gradient-text">
+          <a href="/" className="flex items-center">
+            <span className="text-2xl font-display font-bold text-foreground tracking-tight">
               XAVS
             </span>
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300" />
               </a>
             ))}
-            <Button variant="gradient" size="sm" asChild>
-              <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
-                Book a Call
-              </a>
-            </Button>
+            <a
+              href="#choose-path"
+              className="btn-pill-accent text-sm"
+            >
+              Get Started
+            </a>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -72,29 +70,29 @@ export function Navbar() {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden pb-6 border-b border-border bg-background/95 backdrop-blur-xl"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="md:hidden py-6 border-t border-border/50"
           >
             <div className="flex flex-col gap-4">
               {navItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-2"
+                  className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
                 </a>
               ))}
-              <div className="px-4">
-                <Button variant="gradient" className="w-full" asChild>
-                  <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
-                    Book a Call
-                  </a>
-                </Button>
-              </div>
+              <a
+                href="#choose-path"
+                className="btn-pill-accent text-center mt-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Get Started
+              </a>
             </div>
           </motion.div>
         )}

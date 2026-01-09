@@ -1,26 +1,19 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Brain, Wrench, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowUpRight } from 'lucide-react';
 
 const options = [
   {
-    icon: Brain,
+    label: 'A',
     title: 'Power Your Business with AI',
-    description:
-      'Integrate intelligent automation, predictive analytics, and AI-driven solutions to enhance efficiency and decision-making.',
-    features: ['AI Automation', 'Predictive Analytics', 'Smart Workflows', 'Data Intelligence'],
+    description: 'Integrate intelligent automation, predictive analytics, and AI-driven solutions.',
     href: '/services/ai',
-    gradient: 'from-primary to-accent',
   },
   {
-    icon: Wrench,
+    label: 'B',
     title: 'Build a Product',
-    description:
-      'From MVP to enterprise-grade applications, we build custom software products that solve real problems and scale with you.',
-    features: ['Custom Development', 'MVP Building', 'SaaS Platforms', 'Mobile Apps'],
+    description: 'From MVP to enterprise-grade applications that solve real problems.',
     href: '/services/product',
-    gradient: 'from-accent to-primary',
   },
 ];
 
@@ -29,77 +22,58 @@ export function ChoosePathSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} id="choose-path" className="section-padding scroll-mt-20">
+    <section ref={ref} id="choose-path" className="section-padding border-t border-border/30 scroll-mt-20">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16"
         >
-          <p className="text-sm uppercase tracking-widest text-primary mb-4">Get Started</p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
-            Choose How to{' '}
-            <span className="gradient-text">Improve Your Business</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Select the path that best fits your needs. We'll guide you through the rest.
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">
+            Get Started
           </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold max-w-3xl">
+            Choose how to improve your business
+          </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {options.map((option, index) => {
-            const Icon = option.icon;
-            return (
-              <motion.div
-                key={option.title}
-                initial={{ opacity: 0, y: 40 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="group relative"
-              >
-                <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 md:p-10 transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_80px_-20px_hsl(var(--primary)/0.3)] h-full">
-                  {/* Background gradient */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${option.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                  />
+        <div className="grid md:grid-cols-2 gap-6">
+          {options.map((option, index) => (
+            <motion.a
+              key={option.label}
+              href={option.href}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              className="group relative block"
+            >
+              <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-card/40 backdrop-blur-sm p-8 md:p-12 transition-all duration-500 hover:border-primary/50 hover:bg-card/60 min-h-[280px] flex flex-col">
+                {/* Option Label */}
+                <div className="flex items-center justify-between mb-auto">
+                  <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                    Option {option.label}
+                  </span>
+                  <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                </div>
 
-                  {/* Icon */}
-                  <div
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${option.gradient} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300`}
-                  >
-                    <Icon className="w-8 h-8 text-primary-foreground" />
-                  </div>
-
-                  {/* Content */}
-                  <h3 className="text-2xl md:text-3xl font-display font-bold mb-4">
+                {/* Content */}
+                <div className="mt-8">
+                  <h3 className="text-2xl md:text-3xl font-display font-bold mb-4 group-hover:text-primary transition-colors duration-300">
                     {option.title}
                   </h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     {option.description}
                   </p>
-
-                  {/* Features */}
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {option.features.map((feature) => (
-                      <span
-                        key={feature}
-                        className="px-3 py-1 text-xs font-medium rounded-full bg-secondary text-muted-foreground border border-border"
-                      >
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* CTA */}
-                  <Button variant="outline-glow" className="group/btn">
-                    Learn More
-                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
                 </div>
-              </motion.div>
-            );
-          })}
+
+                {/* Hover glow effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-32 bg-primary/20 blur-3xl" />
+                </div>
+              </div>
+            </motion.a>
+          ))}
         </div>
       </div>
     </section>

@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
 const partners = [
@@ -18,43 +17,36 @@ export function PartnersSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="section-padding overflow-hidden border-y border-border bg-card/30">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+    <section ref={ref} className="py-16 overflow-hidden border-t border-border/30">
+      <div className="container-custom mb-8">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-xs uppercase tracking-[0.3em] text-muted-foreground text-center"
         >
-          <p className="text-sm uppercase tracking-widest text-muted-foreground">
-            Trusted by innovative companies
-          </p>
-        </motion.div>
+          Businesses & creators we've partnered with
+        </motion.p>
       </div>
 
-      {/* Marquee Container */}
+      {/* Marquee */}
       <div className="relative">
-        {/* Gradient overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
 
-        {/* Marquee */}
         <div className="flex overflow-hidden">
           <motion.div
             animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-            className="flex gap-16 items-center shrink-0"
+            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+            className="flex gap-12 items-center shrink-0 px-6"
           >
             {[...partners, ...partners].map((partner, index) => (
-              <div
+              <span
                 key={`${partner}-${index}`}
-                className="flex items-center gap-3 px-6 py-3 rounded-lg bg-secondary/50 border border-border hover:border-primary/50 transition-all duration-300 group shrink-0"
+                className="text-xl md:text-2xl font-display font-medium text-muted-foreground/50 hover:text-foreground transition-colors duration-300 whitespace-nowrap cursor-default"
               >
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-accent group-hover:scale-125 transition-transform" />
-                <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors whitespace-nowrap">
-                  {partner}
-                </span>
-              </div>
+                {partner}
+              </span>
             ))}
           </motion.div>
         </div>
