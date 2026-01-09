@@ -1,32 +1,22 @@
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { MapPin } from 'lucide-react';
+import team1 from '@/assets/team-1.jpeg';
+import team2 from '@/assets/team-2.jpeg';
+import team3 from '@/assets/team-3.jpeg';
+import office1 from '@/assets/office-1.jpeg';
+import event1 from '@/assets/event-1.jpeg';
+import event2 from '@/assets/event-2.jpeg';
 
 const locations = [
-  {
-    city: 'Accra',
-    country: 'Ghana',
-    description: 'Our headquarters and innovation hub',
-    coordinates: 'West Africa',
-  },
-  {
-    city: 'London',
-    country: 'United Kingdom',
-    description: 'European operations & partnerships',
-    coordinates: 'Europe',
-  },
-  {
-    city: 'Mumbai',
-    country: 'India',
-    description: 'Engineering & development center',
-    coordinates: 'South Asia',
-  },
+  { city: 'ACCRA', images: [team1, team2, event1] },
+  { city: 'LONDON', images: [office1, event2, team3] },
+  { city: 'INDIA', images: [team3, team1, office1] },
 ];
 
 export function LocationsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeLocation, setActiveLocation] = useState(0);
 
   return (
     <section ref={ref} className="section-padding">
@@ -35,73 +25,52 @@ export function LocationsSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-12"
         >
-          <p className="text-sm uppercase tracking-widest text-primary mb-4">Global Presence</p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold">
-            Our <span className="gradient-text">Offices</span>
-          </h2>
-        </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {locations.map((location, index) => (
-            <motion.div
-              key={location.city}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className="group relative"
-            >
-              <div
-                className={`relative overflow-hidden rounded-2xl border transition-all duration-500 ${
-                  hoveredIndex === index
-                    ? 'border-primary bg-primary/5 shadow-[0_0_60px_-15px_hsl(var(--primary)/0.4)]'
-                    : 'border-border bg-card'
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">
+            Our Offices
+          </p>
+          
+          {/* Location Tabs */}
+          <div className="flex gap-8 md:gap-12">
+            {locations.map((location, index) => (
+              <button
+                key={location.city}
+                onClick={() => setActiveLocation(index)}
+                className={`text-3xl md:text-5xl lg:text-6xl font-display font-bold transition-all duration-500 ${
+                  activeLocation === index
+                    ? 'text-foreground'
+                    : 'text-muted-foreground/30 hover:text-muted-foreground/60'
                 }`}
               >
-                {/* Background glow */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/5 transition-opacity duration-500 ${
-                    hoveredIndex === index ? 'opacity-100' : 'opacity-0'
-                  }`}
+                {location.city}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Image Gallery */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative overflow-hidden"
+        >
+          <div className="flex animate-marquee-reverse gap-2">
+            {[...locations[activeLocation].images, ...locations[activeLocation].images, ...locations[activeLocation].images].map((img, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-64 md:w-80 h-48 md:h-60 overflow-hidden rounded-lg"
+              >
+                <img
+                  src={img}
+                  alt=""
+                  className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity duration-500"
                 />
-
-                <div className="relative p-8">
-                  {/* Icon */}
-                  <div
-                    className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-500 ${
-                      hoveredIndex === index
-                        ? 'bg-gradient-to-r from-primary to-accent'
-                        : 'bg-secondary'
-                    }`}
-                  >
-                    <MapPin
-                      className={`w-7 h-7 transition-colors duration-300 ${
-                        hoveredIndex === index ? 'text-primary-foreground' : 'text-muted-foreground'
-                      }`}
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <h3 className="text-2xl font-display font-bold mb-1">{location.city}</h3>
-                  <p className="text-primary font-medium mb-3">{location.country}</p>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {location.description}
-                  </p>
-
-                  {/* Coordinates badge */}
-                  <div className="mt-6 pt-4 border-t border-border">
-                    <span className="text-xs uppercase tracking-wider text-muted-foreground">
-                      {location.coordinates}
-                    </span>
-                  </div>
-                </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
