@@ -139,12 +139,13 @@
 
   .btn-pill-accent {
     @apply relative px-8 py-3 font-medium rounded-full transition-all duration-300;
-    @apply bg-accent/90 text-accent-foreground border-0;
+    background-color: #2B71E3;
+    @apply text-accent-foreground border-0;
   }
 
   .btn-pill-accent:hover {
-    @apply bg-accent;
-    box-shadow: 0 0 40px -5px hsl(var(--accent) / 0.6);
+    background-color: #2B71E3;
+    box-shadow: 0 0 40px -5px rgba(27, 39, 255, 0.6);
   }
 
   .section-padding {

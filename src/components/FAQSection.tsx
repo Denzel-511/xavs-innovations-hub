@@ -63,7 +63,7 @@ export function FAQSection() {
                 Chat on WhatsApp
               </a>
               <a
-                href="https://calendly.com"
+                href="https://cal.com/denzel-ansah-nxj6k3/30min"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-pill"

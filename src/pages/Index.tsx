@@ -9,6 +9,7 @@ import { ExperienceSection } from '@/components/ExperienceSection';
 import { TrainingSection } from '@/components/TrainingSection';
 import { FAQSection } from '@/components/FAQSection';
 import { Footer } from '@/components/Footer';
+import {XSprintSection} from '@/components/XPrintSection'
 
 const Index = () => {
   return (
@@ -21,7 +22,7 @@ const Index = () => {
         <HowWeWorkSection />
         <ChoosePathSection />
         <InitiativesSection />
-        <ExperienceSection />
+        <XSprintSection />
         <TrainingSection />
         <FAQSection />
       </main>

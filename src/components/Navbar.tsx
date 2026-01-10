@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 const navItems = [
-  { label: 'Book a Talent', href: '#training' },
-  { label: 'Community', href: '#initiatives' },
+  { label: 'Corporate Training', href: '#training' },
+  { label: 'X sprint', href: '#Xprint' },
 ];
 
 export function Navbar() {

@@ -4,16 +4,16 @@ import { ArrowUpRight } from 'lucide-react';
 
 const initiatives = [
   {
-    name: 'Lontra',
-    description: 'AI-powered analytics platform for data-driven insights.',
+    name: 'Launchra',
+    description: 'an 8-week, high-intensity builder program where engineers work on real company projects to develop production-ready tech skills.',
     status: 'Active',
-    href: '#',
+    href: 'https://launchra.xavslabs.com',
   },
   {
-    name: 'BrickLabs',
-    description: 'Innovation incubator for startups and emerging tech ventures.',
+    name: 'BreakLabs',
+    description: 'a break-season program that helps university students apply technology to their field of study and build real-world tech skills.',
     status: 'Active',
-    href: '#',
+    href: 'https://breaklabs.xavslabs.com',
   },
   {
     name: 'Contractor Network',
