@@ -18,16 +18,10 @@ export function LocationsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeLocation, setActiveLocation] = useState(0);
+  const [activeImageIndex, setActiveImageIndex] = useState(0); // for future multi-image support
 
-  // Create ordered images array where active location's images come first
-  const allImages = locations.flatMap((location, locIndex) => 
-    location.images.map(img => ({ img, city: location.city, locIndex }))
-  );
-  
-  const orderedImages = [
-  ...allImages.filter(item => item.locIndex !== activeLocation),
-  ...allImages.filter(item => item.locIndex === activeLocation)
-];
+  const currentLocation = locations[activeLocation];
+  const currentImage = currentLocation.images[activeImageIndex];
 
   return (
     <section ref={ref} className="section-padding">
@@ -38,7 +32,7 @@ export function LocationsSection() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">
+          <p className="text-l uppercase tracking-[0.3em] text-muted-foreground mb-4">
             Our Offices
           </p>
           
@@ -47,7 +41,10 @@ export function LocationsSection() {
             {locations.map((location, index) => (
               <button
                 key={location.city}
-                onClick={() => setActiveLocation(index)}
+                onClick={() => {
+                  setActiveLocation(index);
+                  setActiveImageIndex(0);
+                }}
                 className={`text-sm font-bold transition-all duration-500 ${
                   activeLocation === index
                     ? 'text-foreground'
@@ -60,32 +57,25 @@ export function LocationsSection() {
           </div>
         </motion.div>
 
-        {/* Image Gallery */}
-<motion.div
-  initial={{ opacity: 0 }}
-  animate={isInView ? { opacity: 1 } : {}}
-  transition={{ duration: 0.6, delay: 0.2 }}
-  className="relative overflow-hidden"
->
-  <div
-    key={activeLocation} // 👈 THIS is the restart trigger
-    className="flex animate-marquee-reverse gap-2"
-  >
-    {[...orderedImages, ...orderedImages].map((item, index) => (
-      <div
-        key={`${item.city}-${index}`}
-        className="flex-shrink-0 w-64 md:w-80 h-48 md:h-60 overflow-hidden rounded-lg"
-      >
-        <img
-          src={item.img}
-          alt={item.city}
-          className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity duration-500"
-        />
-      </div>
-    ))}
-  </div>
-</motion.div>
-
+        {/* Single Image Display */}
+        <div className="relative overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${currentLocation.city}-${activeImageIndex}`}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
+              className="flex-shrink-0 w-80 md:w-90 h-40 md:h-52 overflow-hidden rounded-lg"
+            >
+              <img
+                src={currentImage}
+                alt={currentLocation.city}
+                className="w-full h-full object-cover transition-opacity duration-500"
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

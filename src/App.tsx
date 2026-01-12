@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import XPrint from "./pages/XPrint";
+import XSprint from "./pages/XSprint";
 import Training from "./pages/Training";
 import Prices from "./pages/pricesmockup"
 import NotFound from "./pages/NotFound";
@@ -19,7 +19,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/xprint" element={<XPrint />} />
+          <Route path="/xsprint" element={<XSprint />} />
           <Route path="/training" element={<Training />} />
           <Route path="/services/product" element={<Prices />} />
           <Route path="/services/ai" element={<Prices />} />

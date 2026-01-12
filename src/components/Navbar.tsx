@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { label: 'Corporate Training', href: '#training' },
-  { label: 'X sprint', href: '#Xprint' },
+  { label: 'X sprint', href: '#Xsprint' },
 ];
 
 export function Navbar() {

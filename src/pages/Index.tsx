@@ -9,7 +9,7 @@ import { ExperienceSection } from '@/components/ExperienceSection';
 import { TrainingSection } from '@/components/TrainingSection';
 import { FAQSection } from '@/components/FAQSection';
 import { Footer } from '@/components/Footer';
-import {XSprintSection} from '@/components/XPrintSection'
+import {XSprintSection} from '@/components/XSprintSection'
 
 const Index = () => {
   return (

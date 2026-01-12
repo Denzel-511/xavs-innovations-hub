@@ -45,7 +45,7 @@ export function PartnersSection() {
 <motion.div
   initial={{ opacity: 0 }}
   animate={isInView ? { opacity: 1 } : {}}
-  transition={{ duration: 0.8, delay: 0.2 }}
+  transition={{ duration: 0.6, delay: 0.2 }}
   className="relative overflow-hidden"
 >
   <div
@@ -72,7 +72,7 @@ export function PartnersSection() {
 }
 
 
- function ll() {
+ export function kk() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -97,7 +97,7 @@ export function PartnersSection() {
         <div className="flex overflow-hidden">
           <motion.div
             animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 1500, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 500, repeat: Infinity, ease: 'linear' }}
             className="flex gap-12 items-center shrink-0 px-6"
           >
             {[...partners, ...partners].map((partner, index) => (
