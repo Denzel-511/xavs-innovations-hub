@@ -194,6 +194,10 @@
   animation: marquee-reverse 40s linear infinite;
 }
 
+.animate-marquee-fast {
+  animation: marquee-reverse 20s linear infinite;
+}
+
 /* Fade animations */
 @keyframes fade-up {
   0% {
