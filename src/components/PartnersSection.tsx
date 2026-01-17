@@ -49,7 +49,7 @@ export function PartnersSection() {
   className="relative overflow-hidden"
 >
   <div
-    className="flex animate-marquee-reverse gap-2"
+    className="flex animate-marquee-fast gap-2"
   >
     {partners.map((item, index) => (
       <div

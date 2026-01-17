@@ -33,7 +33,7 @@ export function LocationsSection() {
           className="mb-12"
         >
           <p className="text-l uppercase tracking-[0.3em] text-muted-foreground mb-4">
-            Our Offices
+            Our Team
           </p>
           
           {/* Location Tabs */}
