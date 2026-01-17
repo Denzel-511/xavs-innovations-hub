@@ -91,7 +91,7 @@ export function XSprintSection() {
         <div className="text-center max-w-2xl mx-auto mb-10 text-muted-foreground">
           <p>
             <strong>Fixed time:</strong> 10 days end-to-end ·{' '}
-            <strong>Fixed price:</strong> Starting at ₵8,500 ·{' '}
+            <strong>Fixed price:</strong> Starting at ₵10,000 ·{' '}
             <strong>Real results:</strong> Fully implemented, ready for your team
           </p>
         </div>
