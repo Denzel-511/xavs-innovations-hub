@@ -195,7 +195,7 @@
 }
 
 .animate-marquee-fast {
-  animation: marquee-reverse 20s linear infinite;
+  animation: marquee-reverse 10s linear infinite;
 }
 
 /* Fade animations */

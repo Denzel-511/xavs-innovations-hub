@@ -97,7 +97,7 @@ export function PartnersSection() {
         <div className="flex overflow-hidden">
           <motion.div
             animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 500, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
             className="flex gap-12 items-center shrink-0 px-6"
           >
             {[...partners, ...partners].map((partner, index) => (
