@@ -36,7 +36,7 @@ export function PartnersSection() {
           className="mb-12"
         >
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">
-            Businesses & creators we've partnered with
+            Our partners
           </p>
           
         </motion.div>
@@ -49,7 +49,7 @@ export function PartnersSection() {
   className="relative overflow-hidden"
 >
   <div
-    className="flex animate-marquee-fast gap-2"
+    className="flex animate-marquee-faster gap-2"
   >
     {partners.map((item, index) => (
       <div

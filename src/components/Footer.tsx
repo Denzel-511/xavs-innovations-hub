@@ -11,7 +11,7 @@ const socialLinks = [
 const footerLinks = [
   { label: 'Services', href: '#choose-path' },
   { label: 'Training', href: '#training' },
-  { label: 'XPrint', href: '/xprint' },
+  { label: 'X Sprint', href: '/xsprint' },
 ];
 
 export function Footer() {
