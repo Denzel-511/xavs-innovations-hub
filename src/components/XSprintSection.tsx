@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Target, Code, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useGeoLocation, formatPrice } from '@/hooks/useGeoLocation';
 
 const sprintPhases = [
   {
@@ -27,6 +28,9 @@ const sprintPhases = [
 export function XSprintSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { currencySymbol, price, isLoading } = useGeoLocation();
+
+  const displayPrice = isLoading ? '...' : formatPrice(price, currencySymbol);
 
   return (
     <section
@@ -55,7 +59,7 @@ export function XSprintSection() {
           </p>
 
           <p className="text-muted-foreground">
-            <strong>Why wait months?</strong> We’ve productized our expertise to
+            <strong>Why wait months?</strong> We've productized our expertise to
             deliver a tangible, deployed outcome in just 10 days — no delays,
             no endless meetings.
           </p>
@@ -91,7 +95,7 @@ export function XSprintSection() {
         <div className="text-center max-w-2xl mx-auto mb-10 text-muted-foreground">
           <p>
             <strong>Fixed time:</strong> 10 days end-to-end ·{' '}
-            <strong>Fixed price:</strong> Starting at ₵10,000 ·{' '}
+            <strong>Fixed price:</strong> Starting at {displayPrice} ·{' '}
             <strong>Real results:</strong> Fully implemented, ready for your team
           </p>
         </div>
