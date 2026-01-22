@@ -11,40 +11,64 @@ interface GeoData {
 
 const BASE_PRICE_GHS = 10000;
 
-const currencyMapping: Record<string, { currency: string; symbol: string; multiplier: number }> = {
-  // Ghana - base price
-  GH: { currency: 'GHS', symbol: '₵', multiplier: 1 },
-  
-  // USD countries (3x multiplier)
-  US: { currency: 'USD', symbol: '$', multiplier: 3 },
-  PR: { currency: 'USD', symbol: '$', multiplier: 3 },
-  GU: { currency: 'USD', symbol: '$', multiplier: 3 },
-  
-  // GBP countries (3x multiplier)
-  GB: { currency: 'GBP', symbol: '£', multiplier: 3 },
-  
-  // EUR countries (3x multiplier)
-  DE: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  FR: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  IT: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  ES: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  NL: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  BE: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  AT: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  PT: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  IE: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  FI: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  GR: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  LU: { currency: 'EUR', symbol: '€', multiplier: 3 },
-  
-  // Other African countries - same as Ghana
-  NG: { currency: 'NGN', symbol: '₦', multiplier: 1 },
-  KE: { currency: 'KES', symbol: 'KSh', multiplier: 1 },
-  ZA: { currency: 'ZAR', symbol: 'R', multiplier: 1 },
-  
-  // Default for other countries (USD at 3x)
-  DEFAULT: { currency: 'USD', symbol: '$', multiplier: 3 },
+// Approximate exchange rates: 1 foreign currency = X GHS
+const exchangeRates: Record<string, number> = {
+  USD: 15,   // 1 USD ≈ 15 GHS
+  GBP: 19,   // 1 GBP ≈ 19 GHS
+  EUR: 16,   // 1 EUR ≈ 16 GHS
+  NGN: 0.009, // 1 NGN ≈ 0.009 GHS
+  KES: 0.09,  // 1 KES ≈ 0.09 GHS
+  ZAR: 0.8,   // 1 ZAR ≈ 0.8 GHS
 };
+
+const currencyMapping: Record<string, { currency: string; symbol: string }> = {
+  // Ghana - base price
+  GH: { currency: 'GHS', symbol: '₵' },
+  
+  // USD countries
+  US: { currency: 'USD', symbol: '$' },
+  PR: { currency: 'USD', symbol: '$' },
+  GU: { currency: 'USD', symbol: '$' },
+  
+  // GBP countries
+  GB: { currency: 'GBP', symbol: '£' },
+  
+  // EUR countries
+  DE: { currency: 'EUR', symbol: '€' },
+  FR: { currency: 'EUR', symbol: '€' },
+  IT: { currency: 'EUR', symbol: '€' },
+  ES: { currency: 'EUR', symbol: '€' },
+  NL: { currency: 'EUR', symbol: '€' },
+  BE: { currency: 'EUR', symbol: '€' },
+  AT: { currency: 'EUR', symbol: '€' },
+  PT: { currency: 'EUR', symbol: '€' },
+  IE: { currency: 'EUR', symbol: '€' },
+  FI: { currency: 'EUR', symbol: '€' },
+  GR: { currency: 'EUR', symbol: '€' },
+  LU: { currency: 'EUR', symbol: '€' },
+  
+  // African countries
+  NG: { currency: 'NGN', symbol: '₦' },
+  KE: { currency: 'KES', symbol: 'KSh ' },
+  ZA: { currency: 'ZAR', symbol: 'R' },
+  
+  // Default
+  DEFAULT: { currency: 'USD', symbol: '$' },
+};
+
+function calculatePrice(countryCode: string, currency: string): number {
+  // Ghana keeps base price
+  if (countryCode === 'GH') {
+    return BASE_PRICE_GHS;
+  }
+  
+  const rate = exchangeRates[currency] || exchangeRates.USD;
+  // Convert GHS to foreign currency, then multiply by 3
+  const convertedPrice = BASE_PRICE_GHS / rate;
+  const finalPrice = Math.round(convertedPrice * 3 / 100) * 100; // Round to nearest 100
+  
+  return finalPrice;
+}
 
 export function useGeoLocation(): GeoData {
   const [geoData, setGeoData] = useState<GeoData>({
@@ -66,23 +90,18 @@ export function useGeoLocation(): GeoData {
         const countryName = data.country_name || 'Ghana';
         
         const mapping = currencyMapping[countryCode] || currencyMapping.DEFAULT;
-        
-        // For Ghana, keep base price; for others, apply multiplier
-        const finalPrice = countryCode === 'GH' 
-          ? BASE_PRICE_GHS 
-          : BASE_PRICE_GHS * mapping.multiplier;
+        const price = calculatePrice(countryCode, mapping.currency);
         
         setGeoData({
           country: countryName,
           countryCode,
           currency: mapping.currency,
           currencySymbol: mapping.symbol,
-          price: finalPrice,
+          price,
           isLoading: false,
         });
       } catch (error) {
         console.error('Failed to fetch geo location:', error);
-        // Default to Ghana on error
         setGeoData({
           country: 'Ghana',
           countryCode: 'GH',
